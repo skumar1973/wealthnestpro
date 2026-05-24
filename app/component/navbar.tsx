@@ -9,7 +9,13 @@ const navigation = [
   { name: 'Contact', href: '/contact', current: false },
 ]
 
-function classNames(...classes) {
+interface NavItem {
+  name: string
+  href: string
+  current: boolean
+}
+
+function classNames(...classes: Array<string | false | null | undefined>): string {
   return classes.filter(Boolean).join(' ')
 }
 
