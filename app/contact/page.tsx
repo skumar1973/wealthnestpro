@@ -1,5 +1,5 @@
-import Footer from "../component/footer"
-import MyNavbar from "../component/navbar"
+import Footer from "../components/footer"
+import MyNavbar from "../components/navbar"
 
 const people = [
   {
@@ -16,9 +16,9 @@ const people = [
 
 export default function Contact() {
   return (
-    <div className="bg-gray-800 min-h-screen flex flex-col justify-between">  
-      <MyNavbar />
-    <div className="bg-gray-800 py-24 sm:py-32">
+    // <div className="bg-gray-800 min-h-screen flex flex-col justify-between">  
+    //   <MyNavbar />
+    <div className="min-h-screen bg-gray-800 py-24 sm:py-32">
      
       <div className="mx-auto grid max-w-7xl gap-20 px-6 lg:px-8 xl:grid-cols-3">
         <div className="max-w-xl">
@@ -53,7 +53,7 @@ export default function Contact() {
       </div>
       
     </div>
-    <Footer />
-    </div>
+    // <Footer />
+    // </div>
   )
 }
