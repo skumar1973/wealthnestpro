@@ -1,99 +1,59 @@
-import nodemailer from "nodemailer";
-import dns from 'dns';
+import { Resend } from 'resend';
+import {} from 'dotenv/config';
+
+const resend = new Resend(process.env.RESEND_API_KEY || '');
 
 export async function POST(request: Request) {
+  try {
+    const { firstName, lastName, email, phoneNumber, message } = await request.json();
 
+    console.log('route request', { firstName, lastName, email, phoneNumber, message });
 
-  async function Email(fromEmail: string, toEmail: string, message: string) {
-    const smtpHost = 'smtp.gmail.com';
+    const inquiryEmail = 'support@wealthnestpro.in';
+    const inquiryMessage = `First Name: ${firstName}\nLast Name: ${lastName}\nEmail: ${email}\nPhone Number: ${phoneNumber}\nMessage: ${message}`;
 
-    // Resolve IPv4 address first (helps identify network/DNS issues)
-    let address = smtpHost;
+    // Send to company
     try {
-      const lookupRes: any = await (dns.promises as any).lookup(smtpHost, { family: 4 });
-      if (lookupRes && lookupRes.address) {
-        address = lookupRes.address;
-        console.log(`Resolved ${smtpHost} -> ${address} (IPv4)`);
-      }
-    } catch (e: any) {
-      console.warn(`IPv4 lookup for ${smtpHost} failed, will use hostname instead:`, e?.message || e);
+      
+      console.log('Sending inquiry email to company via Resend with message:', inquiryMessage);
+      console.log('Using Resend API key:', process.env.RESEND_API_KEY ? '***' : 'not set');
+      console.log('Using Resend from email:', process.env.RESEND_FROM_EMAIL!);
+      console.log('Using Resend to email:', inquiryEmail);
+      await resend.emails.send({
+        from: process.env.RESEND_FROM_EMAIL!,
+        to: inquiryEmail,
+        subject: 'New Inquiry',
+        text: inquiryMessage,
+        html: `<pre>${inquiryMessage}</pre>`,
+      });
+      console.log('Inquiry email sent to company');
+    } catch (err) {
+      console.error('Error sending inquiry to company via Resend:', err);
+      return new Response(JSON.stringify({ error: 'Failed to send inquiry' }), { status: 500 });
     }
 
-    // Helper to create transporter with given options
-    const makeTransport = (port: number, secure: boolean) =>
-      nodemailer.createTransport({
-        host: address,
-        port,
-        secure,
-        auth: {
-          user: process.env.SMTP_USER || 'ashutoshnayan707@gmail.com',
-          pass: process.env.SMTP_PASS || 'sbmw kixd vhgl xhur',
-        },
-        // Ensure TLS uses the proper server name when connecting to IP
-        tls: { servername: smtpHost },
-        // generous timeouts to avoid ETIMEDOUT for slow networks
-        connectionTimeout: 30000,
-        greetingTimeout: 15000,
-        socketTimeout: 30000,
-      } as any);
-
-    // Try STARTTLS on 587 first, then fall back to 465 (SSL) if timed out
-    const attempts = [ { port: 587, secure: false }, { port: 465, secure: true } ];
-    let lastError: any = null;
-
-    for (const attempt of attempts) {
-      const { port, secure } = attempt;
-      const transporter = makeTransport(port, secure);
-      try {
-        console.log(`Attempting SMTP connection to ${smtpHost} (${address}) on port ${port} secure=${secure}`);
-        // Optional verify to check connection without sending
-        await transporter.verify();
-        const info = await transporter.sendMail({
-          from: fromEmail,
-          to: toEmail,
-          subject: 'Inquiry',
-          text: message,
-          html: `<p>${message}</p>`
-        });
-        console.log('Message sent: %s', info.messageId);
-        // success => return
-        return;
-      } catch (err: any) {
-        lastError = err;
-        console.error(`Error while sending mail on port ${port}:`, err?.code || err?.message || err);
-        // If timeout, try next attempt; for other errors you may want to break
-        if (err && (err.code === 'ETIMEDOUT' || err.code === 'ESOCKET' || err.code === 'ECONNECTION')) {
-          console.log(`Connection attempt on port ${port} failed with ${err.code}, trying next option...`);
-          continue;
-        } else {
-          // non-network error - stop retrying
-          break;
-        }
-      }
+    // Send confirmation to user
+    const userMessage = `Dear ${firstName},\n\nThank you for reaching out to WealthNestPro. We have received your inquiry and will get back to you within 24 hours.\n\nBest regards,\nWealthNestPro Team`;
+    console.log('Using Resend to email:', email);
+    try {
+      await resend.emails.send({
+        from: process.env.RESEND_FROM_EMAIL!,
+        to: email,
+        subject: 'WealthNestPro - We received your inquiry',
+        text: userMessage,
+        html: `<p>${userMessage.replace(/\n/g, '<br/>')}</p>`,
+      });
+      console.log('Confirmation email sent to user');
+    } catch (err) {
+      console.error('Error sending confirmation to user via Resend:', err);
+      // Not a hard failure for the API; respond OK but note in logs
     }
 
-    console.error('All SMTP attempts failed.', lastError);
-    throw lastError;
+    return new Response(JSON.stringify({ message: 'inquiry submitted successfully' }), {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (err) {
+    console.error('Unhandled error in inquiry route:', err);
+    return new Response(JSON.stringify({ error: 'Internal server error' }), { status: 500 });
   }
-
-  const { firstName, lastName, email, phoneNumber, message } = await request.json();
-
-  console.log("route request", { firstName, lastName, email, phoneNumber, message });
-  
-  const inquiryEmail = "support@wealthnestpro.in";
-  const inquiryMessage= `First Name: ${firstName}\nLast Name: ${lastName}\nEmail: ${email}\nPhone Number: ${phoneNumber}\nMessage: ${message}`;
-  let emailFrom  = email;
-  /* The email will be sent to the company email, with the message as the email body. */
-  await Email(emailFrom, inquiryEmail, inquiryMessage);
-  
-  const userMessage = `Dear ${firstName},\n\nThank you for reaching out to WealthNestPro. We have received your inquiry and will get back to you within 24 hours.\n\nBest regards,\nWealthNestPro Team`;
-  const userEmail = email;
-  emailFrom = "support@wealthnestpro.in";
-
-  /* The email will be sent to the address provided in the form, with the company message. */
-  await Email(emailFrom, userEmail, userMessage);
-
-  return new Response(JSON.stringify({ message: "route" }), {
-    headers: { "Content-Type": "application/json" },
-  })
 }
