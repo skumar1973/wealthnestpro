@@ -1,7 +1,12 @@
 "use client";
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
+
 export default function Inquiry() {
+
+  const [results, setResults] = React.useState({message: ''});
+  const [errors, setErrors] = React.useState({error: ''});
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -22,7 +27,13 @@ export default function Inquiry() {
         body: JSON.stringify(data)
       });
 
-      console.log("Inquiry submitted successfully:", response);
+      await response.json().then((data) => {
+        setResults(data);
+        console.log("Inquiry submitted successfully:", results.message);
+      }).catch((error) => {
+        console.error("Error parsing response:", error);
+        setErrors({error: 'Failed to submit inquiry'});
+      });
       // Optionally handle response here, e.g. check response.ok
     } catch (error) {
       console.error("Error submitting inquiry:", error);
@@ -36,6 +47,12 @@ export default function Inquiry() {
         </h2>
         <p className="mt-2 text-lg/8 text-gray-400">
           Enter your details below and we'll get back to you within 24 hours.</p>
+      </div>
+        <div className="mx-auto mt-6 max-w-2xl text-center text-sm text-green-500">
+            {results.message ? JSON.stringify(results.message) : null}
+      </div>
+      <div className="mx-auto mt-6 max-w-2xl text-center text-sm text-red-500">
+            {errors.error ? JSON.stringify(errors.error) : null}
       </div>
       <form
         action="#"

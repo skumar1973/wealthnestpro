@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   try {
     const { firstName, lastName, email, phoneNumber, message } = await request.json();
 
-    console.log('route request', { firstName, lastName, email, phoneNumber, message });
+    // console.log('route request', { firstName, lastName, email, phoneNumber, message });
 
     const inquiryEmail = 'support@wealthnestpro.in';
     const inquiryMessage = `First Name: ${firstName}\nLast Name: ${lastName}\nEmail: ${email}\nPhone Number: ${phoneNumber}\nMessage: ${message}`;
@@ -15,10 +15,10 @@ export async function POST(request: Request) {
     // Send to company
     try {
       
-      console.log('Sending inquiry email to company via Resend with message:', inquiryMessage);
+     /*  console.log('Sending inquiry email to company via Resend with message:', inquiryMessage);
       console.log('Using Resend API key:', process.env.RESEND_API_KEY ? '***' : 'not set');
       console.log('Using Resend from email:', process.env.RESEND_FROM_EMAIL!);
-      console.log('Using Resend to email:', inquiryEmail);
+      console.log('Using Resend to email:', inquiryEmail); */
       await resend.emails.send({
         from: process.env.RESEND_FROM_EMAIL!,
         to: inquiryEmail,
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
       console.log('Confirmation email sent to user');
     } catch (err) {
       console.error('Error sending confirmation to user via Resend:', err);
-      // Not a hard failure for the API; respond OK but note in logs
+      return new Response(JSON.stringify({ error: 'Internal server error' }), { status: 500 });
     }
 
     return new Response(JSON.stringify({ message: 'inquiry submitted successfully' }), {
