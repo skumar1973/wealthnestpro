@@ -86,6 +86,6 @@ export const defaultMetadata: Metadata = {
     icon: "/favicon.ico",
   },
   verification: {
-    google: "YOUR_GOOGLE_VERIFICATION_CODE",
+    google: "ewoknEDhHNLpNemZ1uNvwOIJfWMJ5ZGBoI1WQU8Gpdw",
   },
 };
