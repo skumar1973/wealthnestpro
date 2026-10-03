@@ -1,47 +1,44 @@
 import type { MetadataRoute } from "next";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://wealthnestpro.in";
 
   return [
     {
       url: baseUrl,
-      lastModified: new Date(),
+      lastModified: "2026-10-03",
       changeFrequency: "weekly",
       priority: 1.0,
     },
-
     {
       url: `${baseUrl}/about`,
-      lastModified: new Date(),
+      lastModified: "2026-10-03",
       changeFrequency: "monthly",
       priority: 0.8,
     },
-
     {
       url: `${baseUrl}/services`,
-      lastModified: new Date(),
+      lastModified: "2026-10-03",
       changeFrequency: "monthly",
       priority: 0.9,
     },
-
     {
       url: `${baseUrl}/process`,
-      lastModified: new Date(),
+      lastModified: "2026-10-03",
       changeFrequency: "monthly",
       priority: 0.7,
     },
-
     {
       url: `${baseUrl}/expertise`,
-      lastModified: new Date(),
+      lastModified: "2026-10-03",
       changeFrequency: "monthly",
       priority: 0.7,
     },
-
     {
       url: `${baseUrl}/contact`,
-      lastModified: new Date(),
+      lastModified: "2026-10-03",
       changeFrequency: "monthly",
       priority: 0.8,
     },
@@ -49,57 +46,51 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Calculators
     {
       url: `${baseUrl}/calculators`,
-      lastModified: new Date(),
+      lastModified: "2026-10-03",
       changeFrequency: "monthly",
       priority: 0.9,
     },
-
     {
       url: `${baseUrl}/calculators/emi`,
-      lastModified: new Date(),
+      lastModified: "2026-10-03",
       changeFrequency: "monthly",
       priority: 0.9,
     },
-
     {
       url: `${baseUrl}/calculators/loan-prepayment`,
-      lastModified: new Date(),
+      lastModified: "2026-10-03",
       changeFrequency: "monthly",
       priority: 0.8,
     },
-
     {
       url: `${baseUrl}/calculators/loan-balance-transfer`,
-      lastModified: new Date(),
+      lastModified: "2026-10-03",
       changeFrequency: "monthly",
       priority: 0.9,
     },
-
     {
       url: `${baseUrl}/calculators/loan-against-property`,
-      lastModified: new Date(),
+      lastModified: "2026-10-03",
       changeFrequency: "monthly",
       priority: 0.9,
     },
 
-    // Legal / informational pages
+    // Legal pages
     {
       url: `${baseUrl}/privacy-policy`,
-      lastModified: new Date(),
+      lastModified: "2026-10-03",
       changeFrequency: "yearly",
       priority: 0.4,
     },
-
     {
       url: `${baseUrl}/disclaimer`,
-      lastModified: new Date(),
+      lastModified: "2026-10-03",
       changeFrequency: "yearly",
       priority: 0.4,
     },
-
     {
       url: `${baseUrl}/terms`,
-      lastModified: new Date(),
+      lastModified: "2026-10-03",
       changeFrequency: "yearly",
       priority: 0.4,
     },
