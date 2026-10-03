@@ -48,6 +48,7 @@ export default function Footer() {
               </div>
               <p className="text-xs text-slate-400 dark:text-slate-500 mt-6 md:mt-0"> © {year} WealthNestPro.in - All rights reserved.</p>
               <p className="text-xs text-slate-400 dark:text-slate-500 mt-6 md:mt-0">Goverment of India, Ministry of Micro, Small amd Medium Experprise</p>
+              <p className="text-xs uppercase text-slate-400 dark:text-slate-500 mt-6 md:mt-0">Shivaay Associates</p>
               <p className="text-xs text-slate-400 dark:text-slate-500 mt-6 md:mt-0">Registration : UDYAM-HR-05-0101024</p>
               <p className="text-xs text-slate-400 dark:text-slate-500 mt-6 md:mt-0">GST : 06AXKPR8594B1Z0</p>
               <VisitorCounter />
