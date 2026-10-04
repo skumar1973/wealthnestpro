@@ -83,7 +83,7 @@ export default function Footer() {
                 {/* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-location" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                   <path fill="#0a3d62" d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/>
                 </svg> */}
-                <a href="https://www.google.com/maps/search/?api=1&query=Emerald+Plaza%2C+Golf+Course+Ext+Rd%2C+Sector+65%2C+Gurugram%2C+Haryana+122101" target="_blank" rel="noopener">Unit no 418, Emerald Plaza, Golf Course Ext Rd, Sector-65, Gurugram, Haryana - 122101 (INDIA)</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Emerald+Plaza%2C+Golf+Course+Ext+Rd%2C+Sector+65%2C+Gurugram%2C+Haryana+122101" target="_blank" rel="noopener">Unit no 418, Emerald Plaza, Golf Course Ext Rd, Sector-65, Gurugram, Haryana - 122018 (INDIA)</a>
                 
                 <a className="map-link" href="https://www.google.com/maps/search/?api=1&query=Emerald+Plaza%2C+Golf+Course+Ext+Rd%2C+Sector+65%2C+Gurugram%2C+Haryana+122101" target="_blank" rel="noopener" aria-label="Open map">
                   {/* <!-- map icon --> */}
