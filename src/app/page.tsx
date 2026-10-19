@@ -7,6 +7,7 @@ import Expertise from "@/components/Expertise";
 import Process from "@/components/Process";
 import FAQ, { FAQItem } from "@/components/FAQ";
 import JsonLd from "@/components/JsonLd";
+import ReviewsSection from "@/components/reviews/ReviewsSection";
 export const metadata: Metadata = {
   title:
     "Home Loan, Balance Transfer & Property Loan Services",
@@ -65,6 +66,8 @@ export default function Home() {
       <Process />
       <ContactPage />
       <FAQ items={homeLoanFAQs} />
+      {/* Review */}
+      <ReviewsSection />
     </div>
     </>
   );

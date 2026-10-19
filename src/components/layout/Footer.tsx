@@ -102,17 +102,19 @@ export default function Footer() {
                 Email: support@wealthnestpro.in
               </p>
                 </div>
+                <span className="text-xs text-slate-500 dark:text-slate-400">
+                <a
+                        href="https://engineering-services-site.onrender.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-xs text-slate-800 transition-colors hover:text-blue-700 dark:text-slate-200 dark:hover:text-blue-400"
+                >Engineered by Northstar Engineering
+                </a>
+                </span>
               </div>
             </div>
           <div>
           </div>
-            <div className="mt-8 border-t border-slate-200 dark:border-slate-800 pt-8 text-center">
-                  <div className="mt-6 flex justify-center">
-                  <span>Developed By Northstar Engineering.</span>
-                    <a href="https://engineering-services-site.onrender.com/" target="_blank"> click here to visit website</a> 
-                  </div>
-            </div>
-
 </Container>
 </footer>
 );
